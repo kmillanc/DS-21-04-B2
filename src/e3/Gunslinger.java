@@ -1,9 +1,10 @@
 package e3;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-public class Gunslinger implements Behavior{
+public class Gunslinger{
 
     int loads = 0, rivalLoads = 0;
 
@@ -13,14 +14,11 @@ public class Gunslinger implements Behavior{
         Random random = new Random();
         int opt = random.nextInt(4);
 
-        if(loads == 0 && rivalLoads == 0){
-            loads += 1;
-            rivalLoads += 1;
-            return GunslingerAction.RELOAD;
-        }
-        if(loads == 0){
-
-        }
+//        if(loads == 0 && rivalLoads == 0){
+//            loads += 1;
+//            rivalLoads += 1;
+//            return GunslingerAction.RELOAD;
+//        }
 
         switch (opt){
             case 0:
@@ -52,7 +50,8 @@ public class Gunslinger implements Behavior{
     /* Devuelve la lista de acciones del rival que ha registrado el pistolero.
        Las ultimas acciones estan al final de la lista. Permite tratar de adivinar la estrategia del rival*/
     public List<GunslingerAction> getRivalActions(){
-        return null;
+        List<GunslingerAction> l = new ArrayList<>();
+        return l;
     }
 
     /*Devuelve las cargas del Rival*/
@@ -63,10 +62,5 @@ public class Gunslinger implements Behavior{
     //Establece como será el comportamiento del pistolero
     public void setBehavior(Behavior behavior){
 
-    }
-
-    @Override
-    public GunslingerAction action(Gunslinger g) {
-        return null;
     }
 }

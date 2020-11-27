@@ -10,130 +10,22 @@ public class TheLordOfTheRings {
         return (int) (Math.random()*(max+1));
     }
 
-    public class Heroes_dice{
-        public int value;   //Atributo
-        //Setter & getters
-        public void setValue(int value) {
-            this.value = value;
-        }
-        public int getValue() {
-            return value;
-        }
-        //Métodos
-        public int heroesDiceRoll(){
-            value = 0;
-            for(int i = 0; i < 2;i++){
-                int h = getRandomNumber(100);
-                if(h > value){
-                    value = h;
-                }
-            }
-            return value;
-        }
-
-    }
-
-    public class Beasts_dice{
-        public int value;       //Atributo
-        //Setter & getters
-        public void setValue(int value) {
-            this.value = value;
-        }
-        public int getValue() {
-            return value;
-        }
-        //Métodos
-        public int beastsDiceRoll(){
-            value = getRandomNumber(90);
-            return value;
-        }
-
-    }
-
-    public abstract class Character{
-        String name;                  //Atributos
-        int energy;
-        int armor;
-        boolean  isDead = false;
-        int tipe;                  //El tipo nos indica que personaje es 1=Elfo 2=Hobbit 3=Humanos 4=Orcos 5=Trasgo
-        //Setters & getters
-        public int getArmor() {
-            return armor;
-        }
-        public int getEnergy() {
-            return energy;
-        }
-        public String getName() {
-            return name;
-        }
-        public void setArmor(int armor) {
-            this.armor = armor;
-        }
-        public void setName(String name) {
-            this.name = name;
-        }
-        public void setEnergy(int energy) {
-            this.energy = energy;
-        }
-        //Constructor
-        public Character(String name,int energy, int armor, int tipe){
-            this.name = name;
-            this.armor = armor;
-            this.energy = energy;
-            this.tipe = tipe;
-        }
-
-    }
-
-    public class Hero extends Character{
-        //        int counterHeroes = 0;
-        public Hero(String name, int energy, int armor, int tipe) {
-            super(name, energy, armor, tipe);
-            counterHeroes++;
-        }
-    }
-
-    public class Elf extends Hero {
-
-        public Elf(String name, int energy, int armor) {
-            super(name, energy, armor, 1);
-        }
-    }
-    public class Hobbit extends Hero {
-
-        public Hobbit(String name, int energy, int armor) {
-            super(name, energy, armor, 2);
-        }
-    }
-    public class Human extends Hero {
-
-        public Human (String name, int energy, int armor) {
-            super(name, energy, armor, 3);
-        }
-    }
 
 
-    public class Beast extends Character{
-        //        int counterBeasts = 0;
-        public Beast(String name, int energy, int armor, int tipe) {
-            super(name, energy, armor, tipe);
-            counterBeasts++;
-        }
-    }
 
-    public class Orc extends Beast{
 
-        public Orc(String name, int energy, int armor) {
-            super(name, energy, armor, 4);
-        }
-    }
-    public class Goblin extends Beast{
 
-        public Goblin(String name, int energy, int armor) {
-            super(name, energy, armor, 5);
-        }
-    }
 
+
+
+
+
+
+
+
+
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////
     public Elf h1;
     public Elf h2;
     public Human h3;

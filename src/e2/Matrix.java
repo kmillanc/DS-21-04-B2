@@ -21,10 +21,13 @@ public class Matrix {
     public void setnFilas(int nFilas) {
         this.nFilas = nFilas;
     }
+    public int posi, posj;
     //Constructores
     public Matrix(int filas, int columnas){     //Contructor
         this.nColumnas = columnas;
         this.nFilas = filas;
+        int m[][] = new int[filas][columnas];
+        this.matriz = m;
         for(int i=0; i<nFilas; i++){
             for (int j = 0; j<nColumnas; j++){
                 this.matriz[i][j] = 0;
@@ -61,15 +64,16 @@ public class Matrix {
     java.lang.Iterable<Integer> aIterable = new Iterable<Integer>() {
         public Iterator <Integer> iterator() {
             return new Iterator <Integer>() {
-                private int filaN = 0;
-                private int columnaN = 0;
+                private int filaN = posi ;
+                private int columnaN = posj;
                 public boolean hasNext() {
                     return (columnaN != matriz[0].length && filaN != matriz.length);
                 }
                 public Integer next(){
                     if(columnaN == matriz[0].length){
+                        posj = 0;
                         columnaN = 0;
-                        return matriz[filaN++][0];
+                        return matriz[filaN++][columnaN];
                     }
                     else{
                         return matriz[filaN][columnaN++];
@@ -84,8 +88,8 @@ public class Matrix {
     java.lang.Iterable<Integer> bIterable = new Iterable<Integer>() {
         public Iterator <Integer> iterator(){
             return new Iterator <Integer>(){
-                private int filaN = 0;
-                private int columnaN = 0;
+                private int filaN ;
+                private int columnaN ;
                 public boolean hasNext() {
                     return (columnaN != matriz[0].length && filaN != matriz.length);
                 }
@@ -106,14 +110,23 @@ public class Matrix {
     };
 
     public int rowColumnIterator(int n) {
+        posi = 0;
+        posj = 0;
+        int r = 0;
         if(n < nColumnas*nFilas ){
             for(int i = 0; i < n-1 ;i++){
                 if(aIterable.iterator().hasNext()){
 //                    aIterable.iterator().next();
-                    aIterable.iterator().next();
+                    r = this.aIterable.iterator().next();
+//                    aIterable.iterator().next();
+                    posj++;
+                    if (posj == this.nColumnas-1){
+                        posj = 0;
+                        posi++;
+                    }
                 }
             }
-            return aIterable.iterator().next();
+            return r;
         }
         else{
             throw new ArrayIndexOutOfBoundsException();
@@ -135,8 +148,13 @@ public class Matrix {
     }
 
 
-    public void getNfilasNcolumnas(){
-        System.out.println("Esta matriz tiene "+ getnFilas() + " filas y " + getnColumnas() + " columnas");
+    public String getNfilasNcolumnas(){
+        String sb = "Esta matriz tiene " +
+                getnFilas() +
+                " filas y " +
+                getnColumnas() +
+                " columnas";
+        return sb;
     }
 
     public int getElement(int filaN, int columnaN ) throws Exception {
@@ -149,7 +167,7 @@ public class Matrix {
     }
 
     public void setElement(int filaN, int columnaN, int replace) throws Exception {
-        if(filaN >= nFilas || columnaN >= nColumnas){
+        if(filaN > nFilas || columnaN > nColumnas){
             throw new Exception("La posicion no es válida");
         }
         else{
@@ -177,29 +195,15 @@ public class Matrix {
         return sb.toString();
     }
 
-    public void getMatrix(){
+    public String getMatrix(){
+        StringBuilder sb = new StringBuilder();
         for(int i = 1; i<=this.nFilas;i++){
-            System.out.println(getRow(i));
+            sb.append(getRow(i));
         }
+        return sb.toString();
     }
 
-    public static void main(String[] args) throws Exception {
-        int j [][]= {{1, 2, 3, 4, 5, 6},
-                {7, 8, 9, 10, 11, 12},
-                {13, 14, 15, 16, 17, 18},
-                {19, 20, 21, 22, 23, 24}};
-        Matrix matrix  = new Matrix(j);
-
-        matrix.getNfilasNcolumnas();
-        System.out.println(matrix.getElement(2, 5));
-        matrix.setElement(2,4,0);
-        System.out.println(matrix.getElement(2, 4));
-        System.out.println(matrix.getRow(2));
-        System.out.println(matrix.getColumn(4));
-        matrix.getMatrix();
-    }
-
-    public class MatrixAddition{
+    public static class MatrixAddition{
 //        int[][] j1 = {{1, 2, 3, 4, 5, 6},
 //                    {7, 8, 9, 10, 11, 12},
 //                    {13, 14, 15, 16, 17, 18},
@@ -215,16 +219,16 @@ public class Matrix {
         public Matrix matrixSumMatrix(Matrix m1, Matrix m2, boolean iter) throws Exception {
             if(m1.nFilas == m2.nFilas && m1.nColumnas == m2.nColumnas){
                 Matrix m3 = new Matrix(m1.nFilas, m2.nColumnas);
-                if(iter){
+                if(!iter){
 //                    m3.matriz[0][0] = m1.matriz[0][0] + m2.matriz[0][0];
                     for(int i = 0; i < m3.nColumnas*m3.nFilas ;i++){
-                        m3.setElement(i/nColumnas,i%nColumnas , m1.rowColumnIterator(i) + m2.rowColumnIterator(i));
+                        m3.setElement(i/m3.nColumnas+1,i%m3.nColumnas+1 , m1.rowColumnIterator(i) + m2.rowColumnIterator(i));
                     }
 
                 }
                 else{
                     for(int i = 0; i < m3.nColumnas*m3.nFilas ;i++){
-                        m3.setElement(i%nFilas,i/nFilas , m1.ColumnRowIterator(i) + m2.ColumnRowIterator(i));
+                        m3.setElement(i%m3.nFilas+1,i/m3.nFilas+1 , m1.ColumnRowIterator(i) + m2.ColumnRowIterator(i));
                     }
                 }
                 return m3;
@@ -236,6 +240,45 @@ public class Matrix {
         }
 
 
+    }
+
+    public static void main(String[] args) throws Exception {
+        int j [][]= {{1, 2, 3, 4, 5, 6},
+                {7, 8, 9, 10, 11, 12},
+                {13, 14, 15, 16, 17, 18},
+                {19, 20, 21, 22, 23, 24}};
+        int[][] j1 = {{ 4, 5, 6},
+                    {10, 11, 12},
+                    {16, 17, 18},
+                    {22, 23, 24}};
+        int[][] j2 = {{ 7, 5, 1},
+                {14, 12, 20},
+                {3, 21, 18},
+                {22, 23, 9}};
+
+        Matrix m1 = new Matrix(j1);
+        Matrix m2 = new Matrix(j2);
+        Matrix matrix  = new Matrix(j);
+
+        System.out.println(matrix.getNfilasNcolumnas());
+        System.out.println(matrix.getElement(2, 5));
+        System.out.println();
+        matrix.setElement(4,4,0);
+        System.out.println();
+        System.out.println(matrix.getElement(2, 4));
+        System.out.println();
+        System.out.println(matrix.getRow(2));
+        System.out.println();
+        System.out.println(matrix.getColumn(4));
+        System.out.println();
+        matrix.getMatrix();
+        System.out.println();
+        m1.getMatrix();
+        System.out.println();
+        m2.getMatrix();
+        System.out.println();
+        MatrixAddition m3 = new MatrixAddition();
+        m3.matrixSumMatrix(m1, m2, false).getMatrix();
     }
 
 }

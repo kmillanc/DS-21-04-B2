@@ -97,9 +97,10 @@ public class Gunfight extends Gunslinger{
             System.out.println("DRAW");
     }
 
-//    public static void main(String[] args) {
-//        Gunslinger g1 = new Gunslinger();
-//        Gunslinger g2 = new Gunslinger();
-//        duel(g1,g2);
-//    }
+    public static void main(String[] args) {
+        Gunfight OldWest = new Gunfight();
+        Gunslinger g1 = new Gunslinger();
+        Gunslinger g2 = new Gunslinger();
+        OldWest.duel(g1, g2);
+    }
 }

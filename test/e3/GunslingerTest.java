@@ -12,4 +12,27 @@ class GunslingerTest {
     }
 
 
+    @Test
+    void action() {
+    }
+
+    @Test
+    void getLoads() {
+    }
+
+    @Test
+    void rivalAction() {
+    }
+
+    @Test
+    void getRivalActions() {
+    }
+
+    @Test
+    void getRivalLoads() {
+    }
+
+    @Test
+    void setBehavior() {
+    }
 }
